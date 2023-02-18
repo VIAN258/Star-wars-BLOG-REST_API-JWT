@@ -23,19 +23,19 @@ const characters = [
 ]
 
 const Characters = (props) => {
-  const [info, setInfo] = []
-  useEffect (() =>{
+  const [info, setInfo] = useState ({"name": " "}, {"height": " "}, {"gender": " "}, {"mass": " "}, {"hair_color": " "}, {"skin_color": " "}, {"birth_year": " "}) 
+  /*useEffect (() =>{
     const getInfocharacter = async () => {
       const  response  = await fetch(`https://www.swapi.tech/api/people/`)
       const characters = response.json
     }
-  })
+  })*/
    
 
   const getInfo =  async (index) => {
     const response = await fetch (`https://www.swapi.tech/api/people/${index}`)
     const people = await response.json()
-    console.log(people)
+    setInfo (people.result.properties)
   }
   return (
   <>
@@ -59,11 +59,28 @@ const Characters = (props) => {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{info.name}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        <p>
+          Height:{info.height}
+        </p>
+        <p>
+          Mass: {info.mass}
+        </p>
+        <p>
+          Hair color: {info.hair_color}
+        </p>
+        <p>
+          Skin color: {info.skin_color}
+        </p>
+        <p>
+          Birth year: {info.birth_year}
+        </p>
+        <p>
+         Gender: {info.gender}
+        </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
