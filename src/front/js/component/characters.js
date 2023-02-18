@@ -1,66 +1,78 @@
 import React from "react";
 import { PropTypes } from "prop-types";
+import { useEffect, useState } from "react";
 
 
-
+const characters = [
+  {
+    'index' : 1,
+    'name' : "Luke Skywalker"
+  },
+  {
+    'index' : 5,
+    'name' : "Leia Organa"
+  },
+  {
+    'index' : 3,
+    'name' : "R2-D2"
+  },
+  {
+    'index' : 11,
+    'name' : "Anakin Skywalker"
+  },
+]
 
 const Characters = (props) => {
+  const [info, setInfo] = []
+  useEffect (() =>{
+    const getInfocharacter = async () => {
+      const  response  = await fetch(`https://www.swapi.tech/api/people/`)
+      const characters = response.json
+    }
+  })
+   
+
   const getInfo =  async (index) => {
-    //const response = await fetch (`https://www.swapi.tech/api/people/${index}`)
-    console.log("hola")
-    //const people = await response.json()
-    //console.log(people)
+    const response = await fetch (`https://www.swapi.tech/api/people/${index}`)
+    const people = await response.json()
+    console.log(people)
   }
   return (
   <>
      
     <div className="card-group">
-  <div className="card">
-  <img src="https://starwars-visualguide.com/assets/img/characters/1.jpg" />
-    <div className="card-body">
-      <h5 className="card-title">Luke Skywalker</h5>
-      <button type="button" onClick={()=> getInfo(1)} className="btn btn-secondary">Detalles</button>
-      <button type="button" className=  " btn btn-outline-danger border-0">
-            <i className="far fa-heart"></i>
-      </button>
+      { characters.map((c) => (
+     
+       <div className="card">
+       <img src={`https://starwars-visualguide.com/assets/img/characters/${c.index}.jpg`}/>
+         <div className="card-body">
+           <h5 className="card-title">{c.name}</h5>
+           <button type="button" onClick={()=> getInfo(c.index)} className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Detalles</button>
+           <button type="button" className=  " btn btn-outline-danger border-0">
+                 <i className="far fa-heart"></i>
+           </button>
+         </div>
+         </div> 
+      ))}
+  </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
-  <div class="card">
-  <img src="https://starwars-visualguide.com/assets/img/characters/5.jpg" />
-    <div class="card-body">
-      <h5 class="card-title">Leia Organa</h5>
-      <button type="button" className="btn btn-secondary">Detalles</button>
-      <button type="button" className=  " btn btn-outline-danger border-0">
-            <i className="far fa-heart"></i>
-      </button>
-    </div>
-  </div>
-  <div class="card">
-  <img src="https://starwars-visualguide.com/assets/img/characters/3.jpg" />
-    <div class="card-body">
-      <h5 class="card-title">R2-D2</h5>
-      <button type="button" className="btn btn-secondary">Detalles</button>
-      <button type="button" className=  " btn btn-outline-danger border-0">
-            <i className="far fa-heart"></i>
-      </button>
-    </div>
-  </div>
-  <div class="card">
-  <img src="https://starwars-visualguide.com/assets/img/characters/11.jpg" />
-    <div class="card-body">
-      <h5 class="card-title">Anakin Skywalker</h5>
-      <button type="button" className="btn btn-secondary">Detalles</button>
-      <button type="button" className=  " btn btn-outline-danger border-0">
-            <i className="far fa-heart"></i>
-      </button>
-    </div>
-  </div>
-  
 </div>
-
-      
     </>
-  
   );
 };
 
