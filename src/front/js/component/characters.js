@@ -22,7 +22,7 @@ const characters = [
   },
 ]
 
-const Characters = (props) => {
+const Characters = () => {
   const [info, setInfo] = useState ({"name": " "}, {"height": " "}, {"gender": " "}, {"mass": " "}, {"hair_color": " "}, {"skin_color": " "}, {"birth_year": " "}) 
 
    
@@ -79,7 +79,6 @@ const Characters = (props) => {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
