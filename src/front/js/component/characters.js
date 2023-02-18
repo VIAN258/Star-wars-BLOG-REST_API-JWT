@@ -24,12 +24,7 @@ const characters = [
 
 const Characters = (props) => {
   const [info, setInfo] = useState ({"name": " "}, {"height": " "}, {"gender": " "}, {"mass": " "}, {"hair_color": " "}, {"skin_color": " "}, {"birth_year": " "}) 
-  /*useEffect (() =>{
-    const getInfocharacter = async () => {
-      const  response  = await fetch(`https://www.swapi.tech/api/people/`)
-      const characters = response.json
-    }
-  })*/
+
    
 
   const getInfo =  async (index) => {
