@@ -23,27 +23,27 @@ const planets = [
 ]
 
 const Planets = () => {
-  const [info, setInfo] = useState ({"name": " "}, {"climate": " "}, {"created": " "}, {"cost_in_credits": " "}, {"crew": " "}, {"hyperdrive_rating": " "}, {"manufacturer": " "}) 
+  const [info, setInfo] = useState ({"name": " "}, {"climate": " "}, {"diameter": " "}, {"surface_water": " "}, {"gravity": " "}, {"orbital_period": " "}, {"terrain": " "}) 
   
 
 
   const getInfo =  async (index) => {
     const response = await fetch (`https://www.swapi.tech/api/planets/${index}`) 
     const lands = await response.json()
+    console.log(lands)
     setInfo (lands.result.properties)
   }
-  
-  
   return (
     <>
+    
       <div className="card-group">
         { planets.map((c) => (
        
-         <div className="card">
+         <div className="card" key={c.index +10}>
          <img src={`https://starwars-visualguide.com/assets/img/planets/${c.index}.jpg`}/>
            <div className="card-body">
              <h5 className="card-title">{c.name}</h5>
-             <button type="button" onClick={()=> getInfo(c.index)} className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Detalles</button>
+             <button type="button" onClick={()=> getInfo(c.index)} className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#planetsModal">Detalles</button>
              <button type="button" className=  " btn btn-outline-danger border-0">
                    <i className="far fa-heart"></i>
              </button>
@@ -51,7 +51,7 @@ const Planets = () => {
            </div> 
         ))}
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="planetsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -63,7 +63,7 @@ const Planets = () => {
             Climate:{info.climate}
           </p>
           <p>
-            Created: {info.created}
+            Created: {info.surface_water}
           </p>
           <p>
             Diameter: {info.diameter}

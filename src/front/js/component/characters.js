@@ -1,6 +1,7 @@
 import React from "react";
 import { PropTypes } from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { Context } from "../store/appContext";
 
 
 const characters = [
@@ -24,9 +25,10 @@ const characters = [
 
 const Characters = () => {
   const [info, setInfo] = useState ({"name": " "}, {"height": " "}, {"gender": " "}, {"mass": " "}, {"hair_color": " "}, {"skin_color": " "}, {"birth_year": " "}) 
-
+  const { store, actions } = useContext(Context);
    
 
+  
   const getInfo =  async (index) => {
     const response = await fetch (`https://www.swapi.tech/api/people/${index}`)
     const people = await response.json()
@@ -38,13 +40,13 @@ const Characters = () => {
     <div className="card-group">
       { characters.map((c) => (
      
-       <div className="card">
+       <div className="card" key={c.index}>
        <img src={`https://starwars-visualguide.com/assets/img/characters/${c.index}.jpg`}/>
          <div className="card-body">
            <h5 className="card-title">{c.name}</h5>
            <button type="button" onClick={()=> getInfo(c.index)} className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Detalles</button>
-           <button type="button" className=  " btn btn-outline-danger border-0">
-                 <i className="far fa-heart"></i>
+           <button type="button" className=  " btn btn-outline-danger border-0" onClick={()=> actions.addFavorites(c.name)}>
+                 <i className="far fa-heart" ></i>
            </button>
          </div>
          </div> 

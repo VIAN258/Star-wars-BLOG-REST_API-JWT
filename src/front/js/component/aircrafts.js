@@ -38,11 +38,11 @@ const Aircrafts = () => {
     <div className="card-group">
     { aircrafts.map((c) => (
 
-  <div className="card">
+  <div className="card" key={c.index +100}>
   <img src={`https://starwars-visualguide.com/assets/img/starships/${c.index}.jpg`} />
     <div className="card-body">
       <h5 className="card-title">{c.name}</h5>
-      <button type="button" onClick={()=> getInfo(c.index)} className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Detalles</button>
+      <button type="button" onClick={()=> getInfo(c.index)} className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#aircraftModal">Detalles</button>
       <button type="button" className=  " btn btn-outline-danger border-0">
             <i className="far fa-heart"></i>
       </button>
@@ -50,7 +50,7 @@ const Aircrafts = () => {
     </div>
  ))}
  </div>
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="aircraftModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
  <div class="modal-dialog">
    <div class="modal-content">
      <div class="modal-header">
