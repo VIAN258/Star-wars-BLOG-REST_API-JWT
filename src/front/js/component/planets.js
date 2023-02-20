@@ -1,5 +1,6 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { Context } from "../store/appContext";
 
 
 
@@ -24,7 +25,7 @@ const planets = [
 
 const Planets = () => {
   const [info, setInfo] = useState ({"name": " "}, {"climate": " "}, {"diameter": " "}, {"surface_water": " "}, {"gravity": " "}, {"orbital_period": " "}, {"terrain": " "}) 
-  
+  const { store, actions } = useContext(Context);
 
 
   const getInfo =  async (index) => {
@@ -44,7 +45,7 @@ const Planets = () => {
            <div className="card-body">
              <h5 className="card-title">{c.name}</h5>
              <button type="button" onClick={()=> getInfo(c.index)} className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#planetsModal">Detalles</button>
-             <button type="button" className=  " btn btn-outline-danger border-0">
+             <button type="button" className=  " btn btn-outline-danger border-0" onClick={()=> actions.addFavorites(c.name)}>
                    <i className="far fa-heart"></i>
              </button>
            </div>
