@@ -17,7 +17,7 @@ export const Navbar = () => {
 					</button>
 					<ul class="dropdown-menu">
                         {store.favorites.map((f,index)=>(
-							<li key={index+1000}><a class="dropdown-item" key={index+100}>{f}</a></li>
+							<li key={index+1000}><a class="dropdown-item" key={index+100}>{f}<button  type="button" className="btn-close" aria-label="Close" onClick={()=> removeFavorites(f.name, index)}></button></a></li>
 						))}
 					</ul>
 		        </div>

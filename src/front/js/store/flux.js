@@ -26,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			removeFavorites: (name) => {
 				const store = getStore ();
 				const tmp = store.favorites.filter(item => item !== name);
-				setStore({favorites: tmp});
+				setStore ({favorites: tmp});
 			},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {

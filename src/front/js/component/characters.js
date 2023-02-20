@@ -60,7 +60,7 @@ const Characters = () => {
          <div className="card-body">
            <h5 className="card-title">{c.name}</h5>
            <button type="button" onClick={()=> getInfo(c.index)} className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Detalles</button>
-           <button type="button" className=  " btn btn-outline-danger border-0" onClick={()=> addFavorites(c.name, index)}>
+           <button type="button" className=  " btn btn-outline-danger border-0"onClick={()=> addFavorites(c.name, index)} >
                  <i className={c.selected ? "fa-solid fa-heart": "fa-regular fa-heart"}></i>
            </button>
          </div>
