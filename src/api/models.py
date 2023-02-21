@@ -1,5 +1,4 @@
-import os
-import sys
+
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -15,17 +14,19 @@ class User(db.Model):
     __tablename__ = 'user'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
-    id = db.Column(Integer, primary_key=True)
-    name = db.Column(String(250), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(250), nullable=False, unique=True )
     password = db.Column(db.String(250), nullable=False)
     
 
     def __init__(self, name, email, password):
+        self.name = name
         self.email = email
         self.password = password
-        self.name = name
-
+        
+    
+   
 
 class Planet(db.Model):
     __tablename__ = 'planet'
