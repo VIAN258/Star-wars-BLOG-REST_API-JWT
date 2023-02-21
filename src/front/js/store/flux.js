@@ -1,3 +1,6 @@
+const URL= "https://3001-vian258-starwarsblogres-68fhb8f7m1n.ws-us87.gitpod.io"
+
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -58,7 +61,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			register: async(user)=> {
+               const response = await fetch(URL + "/api/signup",{
+				crossDomain: true,
+				method: "POST",
+				mode: "cors",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				referrerPolicy: "no-referrer",
+				body: JSON.stringify(user),
+					}).then((res) =>res.json())
+				if (response ["code"] ==3){
+					return true				
+				}
+				else{
+					return false
+				}
+
 			}
+
 		}
 	};
 };

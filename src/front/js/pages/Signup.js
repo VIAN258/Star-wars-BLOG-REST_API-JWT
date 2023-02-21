@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
+
 export const Signup = () => {
     const { store, actions } = useContext(Context);
     const [username, setUsername] = useState("");
@@ -9,10 +10,15 @@ export const Signup = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const sendData = (event) => {
+    const sendData = async(event) => {
         event.preventDefault();
-        actions.register(username, email, password);
-        if (username != "" && email != "" && password != "") navigate("/login");
+        const user = {
+            "email": email, 
+            "password": password
+        }
+        const response = await actions.register(user);
+        if (response ) navigate("/login");
+        else alert("Ocurrio un error")
     };
 
     return (

@@ -4,20 +4,30 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
-from eralchemy2 import render_er
+from flask_sqlalchemy import SQLAlchemy
 
-Base = declarative_base()
 
-class User(Base):
+db = SQLAlchemy()
+
+
+
+class User(db.Model):
     __tablename__ = 'user'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = db.Column(Integer, primary_key=True)
     name = db.Column(String(250), nullable=False)
-    email = db.Column(db.String(250), nullable=False)
+    email = db.Column(db.String(250), nullable=False, unique=True )
     password = db.Column(db.String(250), nullable=False)
+    
 
-class Planet(Base):
+    def __init__(self, name, email, password):
+        self.email = email
+        self.password = password
+        self.name = name
+
+
+class Planet(db.Model):
     __tablename__ = 'planet'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
@@ -25,7 +35,7 @@ class Planet(Base):
     planet_name = db.Column(String(250))
    
 
-class Ship(Base):
+class Ship(db.Model):
     __tablename__ = 'ship'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
@@ -33,7 +43,7 @@ class Ship(Base):
     ships_name = Column(String(250))
    
 
-class Character(Base):
+class Character(db.Model):
     __tablename__ = 'character'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
@@ -41,7 +51,7 @@ class Character(Base):
     characters_name = db.Column(String(250))
   
 
-class Favorite(Base):
+class Favorite(db.Model):
     __tablename__ = 'favorite'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
@@ -57,7 +67,7 @@ class Favorite(Base):
     type_id = db.Column(Integer, ForeignKey('type.id'), nullable=False)
     
  
-class Type(Base):
+class Type(db.Model):
     __tablename__ = 'type'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
@@ -74,4 +84,4 @@ class Type(Base):
         return {}
 
 ## Draw from SQLAlchemy base
-render_er(Base, 'diagram.png')
+##render_er(Base, 'diagram.png')
