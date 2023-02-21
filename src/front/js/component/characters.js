@@ -42,6 +42,9 @@ const Characters = () => {
     const tmp = characters
     tmp[index] = obj
     setSelected (tmp)
+    if(!obj.selected){
+      actions.removeFavorites(name)
+    }
   }
   
   const getInfo =  async (index) => {

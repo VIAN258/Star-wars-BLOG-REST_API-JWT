@@ -4,28 +4,44 @@ import { Context } from "../store/appContext";
 
 
 
-const aircrafts = [
-  {
-    'index' : 10,
-    'name' : "Millennium Falcon"
-  },
-  {
-    'index' : 12,
-    'name' : "X-wing"
-  },
-  {
-    'index' : 13,
-    'name' : "TIE Advanced"
-  },
-  {
-    'index' : 15,
-    'name' : "Executor"
-  },
-]
-
 const Aircrafts = () => {
   const [info, setInfo] = useState ({"name": " "}, {"model": " "}, {"starship_class": " "}, {"manufacturer": " "}, {"crew": " "}, {"cargo_capacity": " "}, {"hyperdrive_rating": " "}) 
   const { store, actions } = useContext(Context);
+  const [aircrafts, setSelected] = useState (
+    [
+      {
+        'index' : 10,
+        'name' : "Millennium Falcon",
+        'selected': false
+      },
+      {
+        'index' : 12,
+        'name' : "X-wing",
+        'selected': false
+      },
+      {
+        'index' : 13,
+        'name' : "TIE Advanced",
+        'selected': false
+      },
+      {
+        'index' : 15,
+        'name' : "Executor",
+        'selected': false
+      },
+    ] 
+  )
+  const addFavorites = (name, index) => {
+    actions.addFavorites(name)
+    const obj = aircrafts[index]
+    obj.selected = !obj.selected
+    const tmp = aircrafts
+    tmp[index] = obj
+    setSelected (tmp)
+    if(!obj.selected){
+      actions.removeFavorites(name)
+    }
+  }
 
 
   const getInfo =  async (index) => {
@@ -37,15 +53,15 @@ const Aircrafts = () => {
   <>
      
     <div className="card-group">
-    { aircrafts.map((c) => (
+    { aircrafts.map((c, index) => (
 
   <div className="card" key={c.index +100}>
   <img src={`https://starwars-visualguide.com/assets/img/starships/${c.index}.jpg`} />
     <div className="card-body">
       <h5 className="card-title">{c.name}</h5>
       <button type="button" onClick={()=> getInfo(c.index)} className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#aircraftModal">Detalles</button>
-      <button type="button" className=  " btn btn-outline-danger border-0" onClick={()=> actions.addFavorites(c.name)}>
-            <i className="far fa-heart"></i>
+      <button type="button" className=  " btn btn-outline-danger border-0" onClick={()=> addFavorites(c.name, index)}>
+          <i className={c.selected ? "fa-solid fa-heart": "fa-regular fa-heart"}></i>
       </button>
     </div>
     </div>

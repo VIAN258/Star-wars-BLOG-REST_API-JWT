@@ -3,30 +3,44 @@ import { useEffect, useState, useContext } from "react";
 import { Context } from "../store/appContext";
 
 
-
-const planets = [
-  {
-    'index' : 2,
-    'name' : "Alderaan"
-  },
-  {
-    'index' : 10,
-    'name' : "Kamino"
-  },
-  {
-    'index' : 5,
-    'name' : "Dagobah"
-  },
-  {
-    'index' : 4,
-    'name' : "Hoth"
-  },
-]
-
 const Planets = () => {
   const [info, setInfo] = useState ({"name": " "}, {"climate": " "}, {"diameter": " "}, {"surface_water": " "}, {"gravity": " "}, {"orbital_period": " "}, {"terrain": " "}) 
   const { store, actions } = useContext(Context);
-
+  const [planets, setSelected] = useState (
+    [
+      {
+        'index' : 2,
+        'name' : "Alderaan",
+        'selected': false
+      },
+      {
+        'index' : 10,
+        'name' : "Kamino",
+        'selected': false
+      },
+      {
+        'index' : 5,
+        'name' : "Dagobah",
+        'selected': false
+      },
+      {
+        'index' : 4,
+        'name' : "Hoth",
+        'selected': false
+      },
+    ] 
+  )
+  const addFavorites = (name, index) => {
+    actions.addFavorites(name)
+    const obj = planets[index]
+    obj.selected = !obj.selected
+    const tmp = planets
+    tmp[index] = obj
+    setSelected (tmp)
+    if(!obj.selected){
+      actions.removeFavorites(name)
+    }
+  }
 
   const getInfo =  async (index) => {
     const response = await fetch (`https://www.swapi.tech/api/planets/${index}`) 
@@ -38,15 +52,15 @@ const Planets = () => {
     <>
     
       <div className="card-group">
-        { planets.map((c) => (
+        { planets.map((c, index) => (
        
          <div className="card" key={c.index +10}>
          <img src={`https://starwars-visualguide.com/assets/img/planets/${c.index}.jpg`}/>
            <div className="card-body">
              <h5 className="card-title">{c.name}</h5>
              <button type="button" onClick={()=> getInfo(c.index)} className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#planetsModal">Detalles</button>
-             <button type="button" className=  " btn btn-outline-danger border-0" onClick={()=> actions.addFavorites(c.name)}>
-                   <i className="far fa-heart"></i>
+             <button type="button" className=  " btn btn-outline-danger border-0" onClick={()=> addFavorites(c.name, index)}>
+                  <i className={c.selected ? "fa-solid fa-heart": "fa-regular fa-heart"}></i>
              </button>
            </div>
            </div> 
