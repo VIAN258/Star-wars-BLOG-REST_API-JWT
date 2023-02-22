@@ -6,12 +6,13 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, jwt_required
 from flask import Flask, request, jsonify, url_for, Blueprint, make_response
-
 from api.utils import generate_sitemap, APIException
 import uuid
 from  werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required
-from cloudinary.uploader import upload
+
+
+
 
 
 
@@ -48,15 +49,17 @@ def login ():
 
 @api.route('/signup', methods=['POST'])
 def signup():
+
+    try:
      #objeto json
         
         data = request.json
-        print(data)
+       
 
         #gets email and password
-        name = data["name"]
+        
         email = data["email"]
-        password = data["password"]
+        
         #checking for existing user
         user = User.query.filter_by(email = email).first()
    
@@ -67,17 +70,20 @@ def signup():
             newUser = User(
             name = request_body["name"],
             email = request_body["email"], 
-            passsword = request_body["password"]),
+            password = request_body["password"]),
         #insert users
             db.session.add(newUser)
             db.session.commit()
-            #return make_response("Done", 200) cambio para conectar con front 
+            #return make_response("Done", 200) 
             response = jsonify(response= "Se creo usuario exitosamente", status = 200, code = 0)
-            response.headers.add('Access-Control-Allow-Origin', '*') #<--- preguntar 
+            response.headers.add('Access-Control-Allow-Origin', '*') 
             return response
 
+
         return jsonify(response ="usuario ya existe", status = 200, code = 1)
-    
+
+    except Exception as e:
+        print(e)
 
         
 
