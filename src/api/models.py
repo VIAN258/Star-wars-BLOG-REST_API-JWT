@@ -9,7 +9,14 @@ class User(db.Model):
     password = db.Column(db.String(80), nullable=False)
     
 
-   
+    def serialize (self):
+        return{
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+           
+           
+        }
     
     def __init__(self, name, email, password):
         self.name = name
