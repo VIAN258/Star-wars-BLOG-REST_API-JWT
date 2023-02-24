@@ -1,4 +1,6 @@
-const URL= "https://3001-vian258-starwarsblogres-68fhb8f7m1n.ws-us87.gitpod.io"
+import { AsyncDependenciesBlock } from "webpack";
+
+const URL= "https://3001-vian258-starwarsblogres-wbj4e9jvpqo.ws-us88.gitpod.io"
 
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -73,15 +75,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				referrerPolicy: "no-referrer",
 				body: JSON.stringify(user),
 					}).then((res) =>res.json())
-				if (response ["code"] ==3){
-					return true				
-				}
-				else{
-					return false
-				}
-
-			}
-
+				console.log(response)
+					return response
+			},
+			/*login: async(email, password)=> {
+				const response = await fetch(URL + "/api/login",{
+				 crossDomain: true,
+				 method: "POST",
+				 mode: "cors",
+				 headers: {
+					 "Content-Type": "application/json",
+				 },
+				 referrerPolicy: "no-referrer",
+				 body: JSON.stringify({"email": email, "password": password}),
+					 }).then((res) =>res.json())
+				 console.log(response)
+					 return response
+			 },*/
 		}
 	};
 };

@@ -35,9 +35,9 @@ def login ():
         else: 
             if user.password == password:
                 access_token= create_access_token(identity=user.id)
-                return jsonify({"code": 1})
+                return jsonify({"code": 1, "token": access_token})
             else:
-                return jsonify({"code": 2, "data": "email or password is incorrect"})
+                return jsonify({"code": 2, "response": "email or password is incorrect"})
     except Exception as e: 
         print(e)
 
@@ -51,30 +51,27 @@ def signup():
         #checking for existing user
         user = User.query.filter_by(email = email).first()
         
-
         if   user is None:
-            request_body = request.json 
             newUser = User(
-            name = request_body["name"],
-            email = request_body["email"], 
-            password = request_body["password"]
-            
+            name = data["name"],
+            email = data["email"], 
+            password = data["password"]
             )
-            
+            print(newUser)
         #insert users
             db.session.add(newUser)
             db.session.commit()
             #return make_response("Done", 200) 
-            response = jsonify({response: "Se creo usuario exitosamente", status : 200, code : 0})
+            response = jsonify({"response": "Se creo usuario exitosamente", "status" : 200, "code" : 0})
             response.headers.add('Access-Control-Allow-Origin', '*') 
             return response
 
 
-        return jsonify({response :"usuario ya existe", status : 200, code : 1})
+        return jsonify({"response" :"usuario ya existe", "status" : 200, "code" : 1})
 
     except Exception as e:
-     #print(e)
-     return jsonify({response: "Error", status : 500, code : -1})
+     print(e)
+     return jsonify({"response": "Error", "status" : 500, "code" : e})
      
 
         

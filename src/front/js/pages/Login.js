@@ -17,9 +17,11 @@ export const Login = () => {
         }
     }, [store.token]);
 
-    const sendData = (event) => {
+    const sendData = async (event) => {
         event.preventDefault();
-        actions.login(email, password);
+        const response = await actions.login(email, password);
+        if (response ["code"] == 1)  navigate("/home");
+        else alert(response ["response"])
     };
 
     return (

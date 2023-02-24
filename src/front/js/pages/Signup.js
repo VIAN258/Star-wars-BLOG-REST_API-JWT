@@ -13,12 +13,13 @@ export const Signup = () => {
     const sendData = async(event) => {
         event.preventDefault();
         const user = {
+            "name": username, 
             "email": email, 
             "password": password
         }
         const response = await actions.register(user);
-        if (response ) navigate("/login");
-        else alert("Ocurrio un error")
+        if (response ["code"] == 0 ) navigate("/");
+        else alert(response ["response"])
     };
 
     return (

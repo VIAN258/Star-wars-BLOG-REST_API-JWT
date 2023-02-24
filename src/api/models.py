@@ -15,13 +15,18 @@ class User(db.Model):
             "name": self.name,
             "email": self.email,
            
-           
         }
     
     def __init__(self, name, email, password):
         self.name = name
         self.email = email
         self.password = password
+
+    def __repr__(self):
+        return f"{self.name}: {self.email}: {self.password}"
+
+
+    
 
     
 
