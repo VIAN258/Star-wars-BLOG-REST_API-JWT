@@ -23,7 +23,7 @@ class User(db.Model):
         self.password = password
 
     def __repr__(self):
-        return f"{self.name}: {self.email}: {self.password}"
+        return f" {self.id}: {self.name}: {self.email}: {self.password}"
 
 
     

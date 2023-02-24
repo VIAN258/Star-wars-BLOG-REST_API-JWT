@@ -1,6 +1,5 @@
-import { AsyncDependenciesBlock } from "webpack";
 
-const URL= "https://3001-vian258-starwarsblogres-wbj4e9jvpqo.ws-us88.gitpod.io"
+const URL= "https://3001-vian258-starwarsblogres-5tf2nktc7u8.ws-us88.gitpod.io"
 
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -78,7 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(response)
 					return response
 			},
-			/*login: async(email, password)=> {
+			login: async(email, password)=> {
 				const response = await fetch(URL + "/api/login",{
 				 crossDomain: true,
 				 method: "POST",
@@ -91,7 +90,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					 }).then((res) =>res.json())
 				 console.log(response)
 					 return response
-			 },*/
+			 },
 		}
 	};
 };

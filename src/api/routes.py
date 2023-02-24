@@ -27,12 +27,14 @@ def handle_hello():
 def login ():
     try: 
         data = request.json
+        print(data)
         email = data["email"]
         password = data["password"]
         user = User.query.filter_by(email=email).first()
         if user is None:
             return jsonify({"data": "user not found" , "code" :0})
         else: 
+            print(user)
             if user.password == password:
                 access_token= create_access_token(identity=user.id)
                 return jsonify({"code": 1, "token": access_token})
