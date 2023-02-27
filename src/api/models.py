@@ -25,7 +25,7 @@ class User(db.Model):
     def __repr__(self):
         return f" {self.id}: {self.name}: {self.email}: {self.password}"
 
-class Planet(Base):
+class Planet(db.Model):
     __tablename__ = 'planet'
     id = db.Column(db.Integer, primary_key=True)
     planet_name = db.Column(db.String(250))
@@ -42,7 +42,7 @@ class Planet(Base):
     def __repr__(self):
         return f" {self.id}: {self.planet_name}" 
 
-class Ship(Base):
+class Ship(db.Model):
     __tablename__ = 'ship'
     id = db.Column(db.Integer, primary_key=True)
     ships_name = db.Column(db.String(250))
@@ -60,7 +60,7 @@ class Ship(Base):
         return f" {self.id}: {self.ship_name}" 
 
 
-class Character(Base):
+class Character(db.Model):
     __tablename__ = 'character'
     id = db.Column(db.Integer, primary_key=True)
     character_name = db.Column(db.String(250))
@@ -78,17 +78,17 @@ class Character(Base):
         return f" {self.id}: {self.character_name}" 
 
 
-class Favorite(Base):
+class Favorite(db.Model):
     __tablename__ = 'favorite'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('user.id'), nullable=False)
-    user = relationship(User)
-    character_id = db.Column(db.Integer, ForeignKey('character.id'), nullable=False)
-    character = relationship(Character)
-    planet_id = db.Column(db.Integer, ForeignKey('planet.id'), nullable=False)
-    planet = relationship(Planet)
-    ship_id = db.Column(db.Integer, ForeignKey('ship.id'), nullable=False)
-    ship = relationship(Ship)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship(User)
+    character_id = db.Column(db.Integer, db.ForeignKey('character.id'), nullable=False)
+    character = db.relationship(Character)
+    planet_id = db.Column(db.Integer, db.ForeignKey('planet.id'), nullable=False)
+    planet = db.relationship(Planet)
+    ship_id = db.Column(db.Integer, db.ForeignKey('ship.id'), nullable=False)
+    ship = db.relationship(Ship)
     
 
     def serialize (self):
