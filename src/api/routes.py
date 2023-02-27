@@ -80,21 +80,21 @@ def signup():
 
 # --------------GET-----------------------
 
-@app.route('/character', methods=['GET'])
+@api.route('/character', methods=['GET'])
 def get_character():
     allcharacter = Character.query.all()
     results = list(map(lambda item: item.serialize(),allcharacter))
 
     return jsonify(results), 200
 
-@app.route('/character/<int:character_id>', methods=['GET'])
+@api.route('/character/<int:character_id>', methods=['GET'])
 def get_character_id(character_id):
 
     character = Character.query.filter_by(id=character_id).first()
     return jsonify(character.serialize()), 200
 
 
-@app.route('/planet', methods=['GET'])
+@api.route('/planet', methods=['GET'])
 def get_planet():
 
     allplanet = Planet.query.all()
@@ -103,13 +103,13 @@ def get_planet():
     return jsonify(results), 200
 
 
-@app.route('/planet/<int:planet_id>', methods=['GET'])
+@api.route('/planet/<int:planet_id>', methods=['GET'])
 def get_planet_id(planet_id):
 
     planet = Planet.query.filter_by(id=planet_id).first()
     return jsonify(planet.serialize()), 200
 
-@app.route('/user', methods=['GET'])
+@api.route('/user', methods=['GET'])
 def get_user():
 
     allusers = User.query.all()
@@ -117,7 +117,7 @@ def get_user():
 
     return jsonify(results), 200
 
-@app.route('/user/<int:user_id>/favorites', methods=['GET'])
+@api.route('/user/<int:user_id>/favorites', methods=['GET'])
 def get_user_favorites(user_id):
 
     favs = Favorites.query.filter_by(user_id=user_id).all()
@@ -128,7 +128,7 @@ def get_user_favorites(user_id):
 
 # --------------POST-----------------------
 
-@app.route('/user/<int:user_id>/favorites/planets', methods=['POST'])
+@api.route('/user/<int:user_id>/favorites/planets', methods=['POST'])
 def add_planet_favorites(user_id):
 
     request_body = request.json
@@ -147,7 +147,7 @@ def add_planet_favorites(user_id):
     return jsonify({'msg': 'el favorito ya existe'}), 400
 
 
-@app.route('/user/<int:user_id>/favorites/character', methods=['POST'])
+@api.route('/user/<int:user_id>/favorites/character', methods=['POST'])
 def add_people_favorites(user_id):
 
     request_body = request.json
@@ -168,7 +168,7 @@ def add_people_favorites(user_id):
 
 # --------------DELETE-----------------------
 
-@app.route('/user/<int:user_id>/favorites/planet', methods=['DELETE'])
+@api.route('/user/<int:user_id>/favorites/planet', methods=['DELETE'])
 def delete_planet_favorites(user_id):
 
     request_body = request.json
@@ -185,7 +185,7 @@ def delete_planet_favorites(user_id):
 
     return jsonify({'msg': 'No existe el favorito a eliminar'}), 400
 
-@app.route('/user/<int:user_id>/favorites/people', methods=['DELETE'])
+@api.route('/user/<int:user_id>/favorites/people', methods=['DELETE'])
 def delete_people_favorites(user_id):
 
     
@@ -197,7 +197,7 @@ def delete_people_favorites(user_id):
     if favs is not None:
         db.session.commit()
         db.session.commit()
-        
+
         return jsonify({'msg': 'eliminaste el favorito correctamente'}), 200    
 
     return jsonify({'msg': 'No existe el favorito a eliminar'}), 400
