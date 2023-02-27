@@ -33,7 +33,7 @@ class Planet(Base):
     def serialize (self):
         return{
             "id": self.id,
-            "planet_name": self.name,           
+            "planet_name": self.planet_name,           
         }
     
     def __init__(self, planet_name):
@@ -41,6 +41,74 @@ class Planet(Base):
     
     def __repr__(self):
         return f" {self.id}: {self.planet_name}" 
+
+class Ship(Base):
+    __tablename__ = 'ship'
+    id = db.Column(db.Integer, primary_key=True)
+    ships_name = db.Column(db.String(250))
+
+    def serialize (self):
+        return{
+            "id": self.id,
+            "ship_name": self.ship_name,           
+        }
+    
+    def __init__(self, ship_name):
+        self.ship_name = ship_name
+    
+    def __repr__(self):
+        return f" {self.id}: {self.ship_name}" 
+
+
+class Character(Base):
+    __tablename__ = 'character'
+    id = db.Column(db.Integer, primary_key=True)
+    character_name = db.Column(db.String(250))
+
+    def serialize (self):
+        return{
+            "id": self.id,
+            "character_name": self.charcater_name,           
+        }
+    
+    def __init__(self, charcter_name):
+        self.character_name = character_name
+    
+    def __repr__(self):
+        return f" {self.id}: {self.character_name}" 
+
+
+class Favorite(Base):
+    __tablename__ = 'favorite'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey('user.id'), nullable=False)
+    user = relationship(User)
+    character_id = db.Column(db.Integer, ForeignKey('character.id'), nullable=False)
+    character = relationship(Character)
+    planet_id = db.Column(db.Integer, ForeignKey('planet.id'), nullable=False)
+    planet = relationship(Planet)
+    ship_id = db.Column(db.Integer, ForeignKey('ship.id'), nullable=False)
+    ship = relationship(Ship)
+    
+
+    def serialize (self):
+        return{
+            "id": self.id,
+            "user_id": self.user_id, 
+            "character_id": self.character_id, 
+            "planet_id": self.planet_id,
+            "ship_id": self.ship_id,           
+        }
+    
+    def __init__(self, user_id, character_id, planet_id, ship_id):
+        self.user_id = user_id
+        self.character_id = character_id
+        self.planet_id = planet_id
+        self.ship_id = ship_id
+    
+    def __repr__(self):
+        return f" {self.id}: {self.user_id}: {self.character_id}: {self.planet_id}: {self.ship_id}:" 
+     
         
         
 
