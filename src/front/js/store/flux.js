@@ -1,5 +1,5 @@
 
-const URL= "https://3001-vian258-starwarsblogres-osz01sn5ake.ws-us88.gitpod.io"
+const URL= "https://3001-vian258-starwarsblogres-kab8o9gkw3w.ws-us88.gitpod.io" 
 
 
 const getState = ({ getStore, getActions, setStore }) => {

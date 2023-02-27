@@ -74,6 +74,134 @@ def signup():
     except Exception as e:
      print(e)
      return jsonify({"response": "Error", "status" : 500, "code" : e})
+
+
+
+
+# --------------GET-----------------------
+
+@app.route('/character', methods=['GET'])
+def get_character():
+    allcharacter = Character.query.all()
+    results = list(map(lambda item: item.serialize(),allcharacter))
+
+    return jsonify(results), 200
+
+@app.route('/character/<int:character_id>', methods=['GET'])
+def get_character_id(character_id):
+
+    character = Character.query.filter_by(id=character_id).first()
+    return jsonify(character.serialize()), 200
+
+
+@app.route('/planet', methods=['GET'])
+def get_planet():
+
+    allplanet = Planet.query.all()
+    results = list(map(lambda item: item.serialize(),allplanet))
+
+    return jsonify(results), 200
+
+
+@app.route('/planet/<int:planet_id>', methods=['GET'])
+def get_planet_id(planet_id):
+
+    planet = Planet.query.filter_by(id=planet_id).first()
+    return jsonify(planet.serialize()), 200
+
+@app.route('/user', methods=['GET'])
+def get_user():
+
+    allusers = User.query.all()
+    results = list(map(lambda item: item.serialize(),allusers))
+
+    return jsonify(results), 200
+
+@app.route('/user/<int:user_id>/favorites', methods=['GET'])
+def get_user_favorites(user_id):
+
+    favs = Favorites.query.filter_by(user_id=user_id).all()
+    results = list(map(lambda item: item.serialize(),favs))
+
+    return jsonify(results), 200
+
+
+# --------------POST-----------------------
+
+@app.route('/user/<int:user_id>/favorites/planets', methods=['POST'])
+def add_planet_favorites(user_id):
+
+    request_body = request.json
+    print(request_body)
+    print(request_body['planets_id'])
+    new_fav_planet = Favorites(user_id = user_id, character_id = None, ship_id = None, planet_id = request_body['planet_id']) 
+    favs = Favorites.query.filter_by(user_id=user_id, planet_id=request_body['planet_id']).first()
+    print(favs)
+    if favs is None:
+        new_fav_planet = Favorites(user_id = user_id, character_id = None, ship_id = None, planet_id = request_body['planet_id']) 
+        db.session.add(new_fav_planet)
+        db.session.commit()
+
+        return jsonify({new_fav_planet}), 200    
+
+    return jsonify({'msg': 'el favorito ya existe'}), 400
+
+
+@app.route('/user/<int:user_id>/favorites/character', methods=['POST'])
+def add_people_favorites(user_id):
+
+    request_body = request.json
+    print(request_body)
+    print(request_body['character_id'])
+    new_fav_people = Favorites(user_id = user_id, character_id = request_body['character_id'], ship_id = None, planet_id = None) 
+    favs = Favorites.query.filter_by(user_id=user_id, charcater_id=request_body['character_id']).first()
+    print(favs)
+    if favs is None:
+        new_fav_people = Favorites(user_id = user_id, charcater_id = request_body['character_id'], ship_id = None, planet_id = None) 
+        db.session.add(new_fav_people)
+        db.session.commit()
+
+        return jsonify({new_fav_people}), 200    
+
+    return jsonify({'msg': 'el favorito ya existe'}), 400
+
+
+# --------------DELETE-----------------------
+
+@app.route('/user/<int:user_id>/favorites/planet', methods=['DELETE'])
+def delete_planet_favorites(user_id):
+
+    request_body = request.json
+    print(request_body)
+    print(request_body['planet_id'])
+    favs = Favorites.query.filter_by(user_id=user_id, planet_id=request_body['planet_id']).first()
+    print(favs)
+
+    if favs is not None:
+        db.session.delete(favs)
+        db.session.commit()
+
+        return jsonify({'msg': 'eliminaste el favorito correctamente'}), 200    
+
+    return jsonify({'msg': 'No existe el favorito a eliminar'}), 400
+
+@app.route('/user/<int:user_id>/favorites/people', methods=['DELETE'])
+def delete_people_favorites(user_id):
+
+    
+    request_body = request.json
+    print(request_body)
+    print(request_body['character_id'])
+    favs = Favorites.query.filter_by(user_id=user_id, charcater_id=request_body['character_id']).first()
+    print(favs)
+    if favs is not None:
+        db.session.commit()
+        db.session.commit()
+        
+        return jsonify({'msg': 'eliminaste el favorito correctamente'}), 200    
+
+    return jsonify({'msg': 'No existe el favorito a eliminar'}), 400
+
      
 
         
