@@ -25,6 +25,25 @@ class User(db.Model):
     def __repr__(self):
         return f" {self.id}: {self.name}: {self.email}: {self.password}"
 
+class Planet(Base):
+    __tablename__ = 'planet'
+    id = db.Column(db.Integer, primary_key=True)
+    planet_name = db.Column(db.String(250))
+
+    def serialize (self):
+        return{
+            "id": self.id,
+            "planet_name": self.name,           
+        }
+    
+    def __init__(self, planet_name):
+        self.planet_name = planet_name
+    
+    def __repr__(self):
+        return f" {self.id}: {self.planet_name}" 
+        
+        
+
 
     
 
